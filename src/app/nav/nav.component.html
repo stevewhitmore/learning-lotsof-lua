@@ -1,0 +1,12 @@
+<nav *ngIf="(navData$ | async) as navData">
+  <ul>
+    <li *ngFor="let topic of navData">
+      {{topic.name}}
+      <ul>
+        <li *ngFor="let lesson of topic.lessons">
+          {{lesson.name}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

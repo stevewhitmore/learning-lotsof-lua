@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Getting Started",
+    "path": "getting-started",
+    "lessons": [
+      {
+        "name": "Chunks",
+        "path": "getting-started/chunks",
+        "content": "some text...",
+        "quiz": "quiz content"
+      },
+      {
+        "name": "Global Variables",
+        "path": "getting-started/global-variables",
+        "content": "some text...",
+        "quiz": "quiz content"
+      }
+    ]
+  }, {
+    "name": "Types and Values",
+    "path": "types-and-values",
+    "lessons": [
+      {
+        "name": "Nil",
+        "path": "types-and-values/nil",
+        "content": "some text...",
+        "quiz": "quiz content"
+      }
+    ]
+  }
+]
