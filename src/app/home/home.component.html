@@ -1,3 +1,6 @@
-<div *ngIf="(homeContent$ | async) as homeContent">
-  <markdown [data]="homeContent"></markdown>
-</div>
+<section class="main-content">
+  <div *ngIf="(homeContent$ | async) as homeContent">
+    <markdown [data]="homeContent"></markdown>
+  </div>
+  <button class="primary">Get Started >></button>
+</section>

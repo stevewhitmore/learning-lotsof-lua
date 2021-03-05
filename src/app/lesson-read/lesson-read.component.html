@@ -1,7 +1,9 @@
 <section class="main-content">
-  <markdown [data]="lessonContent"></markdown>
-</section>
+  <div>
+    <markdown [data]="lessonContent"></markdown>
+  </div>
 
-<button type="button"
+  <button type="button"
         class="primary"
         (click)="takeQuiz()">Take Quiz</button>
+</section>

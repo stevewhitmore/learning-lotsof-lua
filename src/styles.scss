@@ -4,6 +4,20 @@ body {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
+.main-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+
+  div {
+    height: 90vh;
+  }
+  
+  button {
+    align-self: flex-end;
+  }
+}
+
 a {
   color: rgb(51, 162, 255);
   text-decoration: none;
