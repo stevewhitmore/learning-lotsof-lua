@@ -1,0 +1,11 @@
+div {
+  display: flex;
+
+  app-nav {
+    flex-shrink: 0;
+  }
+
+  router-outlet {
+    margin-left: 2rem;
+  }
+}

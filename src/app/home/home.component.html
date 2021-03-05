@@ -1,0 +1,3 @@
+<div *ngIf="(homeContent$ | async) as homeContent">
+  <markdown [data]="homeContent"></markdown>
+</div>
