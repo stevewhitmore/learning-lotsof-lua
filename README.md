@@ -5,7 +5,7 @@ which is easily one of my favorite languages. Like Python, Lua is simple and eas
 
 ## Resources
 
-### Official Documentaiton
+### Official Documentation
 
 There's no better place to learn about something than from the creators themselves. We'll be using the official Lua documentation to create flashcards.
 
