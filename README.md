@@ -26,6 +26,6 @@ For example:
 
 ### Roblox DevHub
 
-Once we get the basics down we'll dive into the official Roblox DevHub aimed at helping players build their own games! 
+Once we get the basics down we'll dive into the official Roblox DevHub aimed at helping players build their own games!
 
 [See Roblox DevHub](https://developer.roblox.com/en-us/)

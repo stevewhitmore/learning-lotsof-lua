@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "questionType": "multiple-choice",
+        "question": "something something?",
+        "options": ["foo", "bar", "baz"],
+        "answer": "bar"
+    },
+    {
+        "id": 2,
+        "questionType": "multiple-choice",
+        "question": "blah something?",
+        "options": [1, 2, 3],
+        "answer": 3
+    }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Getting Started",
+    "path": "getting-started",
+    "quizId": 1
+  },
+  {
+    "name": "Chunks",
+    "path": "chunks",
+    "quizId": 2
+  },
+  {
+    "name": "Global Variables",
+    "path": "global-variables",
+    "quizId": 2
+  },
+  {
+    "name": "Nil",
+    "path": "nil",
+    "quizId": 3
+  }
+]

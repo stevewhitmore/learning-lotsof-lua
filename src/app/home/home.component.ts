@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HomeService } from '../shared/services/home.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { HomeService } from '../shared/services/home.service';
 })
 export class HomeComponent {
 
-  homeContent$ = this.homeService.homeContent$;
+  homeContent$: Observable<any> = this.homeService.homeContent$;
 
   constructor(private homeService: HomeService) {}
 }
