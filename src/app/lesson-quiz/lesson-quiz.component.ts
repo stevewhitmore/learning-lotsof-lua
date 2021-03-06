@@ -14,12 +14,14 @@ export class LessonQuizComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.latestQuizContent = changes['quizContent'].currentValue;
-
-    console.log('latestQuizContent:', this.latestQuizContent)
   }
 
   cancelQuiz() {
     this.cancelQuizClick.emit();
+  }
+
+  submitAnswer() {
+    console.log('yay!')
   }
 
 }
