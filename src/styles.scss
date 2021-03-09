@@ -12,10 +12,6 @@ body {
   .content {
     height: 90vh;
   }
-  
-  button {
-    align-self: flex-end;
-  }
 }
 
 a {
@@ -27,7 +23,8 @@ a {
   }
 }
 
-button {
+button, .button {
+  align-self: flex-end;
   padding: .375rem .75rem;
   color: #fff;
   font-size: 1rem;
@@ -48,5 +45,6 @@ button {
 
   &:hover {
     filter: brightness(150%);
+    text-decoration: none;
   }
 }
