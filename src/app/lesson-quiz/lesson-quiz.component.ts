@@ -10,7 +10,7 @@ interface QuizAnswerModel {
 @Component({
   selector: 'app-lesson-quiz',
   templateUrl: './lesson-quiz.component.html',
-  styleUrls: ['./lesson-quiz.component.scss']
+  styleUrls: ['./lesson-quiz.component.scss'],
 })
 export class LessonQuizComponent implements OnChanges {
   @Input() quizContent: any;
@@ -19,11 +19,11 @@ export class LessonQuizComponent implements OnChanges {
   answerField = new FormControl();
   answeredCorrectly: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.latestQuizContent = changes.quizContent.currentValue;
-    console.log(this.latestQuizContent)
+    console.log(this.latestQuizContent);
   }
 
   cancelQuiz() {
@@ -49,16 +49,15 @@ export class LessonQuizComponent implements OnChanges {
     }
 
     const updatedStorageArray = storageArray.map((quizResult: QuizAnswerModel) => {
-      return quizResult.id === updatedStorageObject.id 
-        ? { 
-            ...quizResult, 
-            answered: updatedStorageObject.answered, 
-            correct: updatedStorageObject.correct, 
-          } 
+      return quizResult.id === updatedStorageObject.id
+        ? {
+            ...quizResult,
+            answered: updatedStorageObject.answered,
+            correct: updatedStorageObject.correct,
+          }
         : quizResult;
     });
 
     localStorage.setItem(storageKey, JSON.stringify(updatedStorageArray));
   }
-
 }
