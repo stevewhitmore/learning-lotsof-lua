@@ -42,7 +42,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   getQuizContent() {
-    console.log(this.path)
     this.quizContent$ = this.lessonService.getQuizContent(this.path);
     this.quizMode = true;
   }
