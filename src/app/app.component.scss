@@ -1,0 +1,7 @@
+div {
+  display: flex;
+
+  app-nav {
+    flex-shrink: 0;
+  }
+}

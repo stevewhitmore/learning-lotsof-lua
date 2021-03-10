@@ -1,0 +1,10 @@
+<div *ngIf="(lessonContent$ | async) as lessonContent">
+  <div *ngIf="!quizMode; else showQuiz">
+    <app-lesson-read [lessonContent]="lessonContent"
+                    (takeQuizClick)="onTakeQuizClick()"></app-lesson-read>
+  </div>
+  <ng-template #showQuiz>
+    <app-lesson-quiz [quizContent]="quizContent$ | async"
+                    (cancelQuizClick)="onCancelQuizClick()"></app-lesson-quiz>
+  </ng-template>
+</div>

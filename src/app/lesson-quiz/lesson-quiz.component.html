@@ -1,0 +1,19 @@
+<section class="main-content" *ngIf="latestQuizContent">
+  <div class="content">
+    <h2>{{latestQuizContent.question}}</h2>
+    <div *ngFor="let answer of latestQuizContent.options">
+      <input type="radio" [formControl]="answerField" value="{{answer}}" id="{{answer}}">
+      <label for="{{answer}}">{{answer}}</label>
+    </div>
+    
+  </div>
+
+  <div class="button-group">
+    <button type="button"
+            class="secondary"
+            (click)="cancelQuiz()">Go Back</button>
+    <button type="button"
+            class="primary"
+            (click)="submitAnswer()">Submit</button>
+  </div>
+</section>
