@@ -1,10 +1,11 @@
-<nav *ngIf="(navData$ | async) as lessons">
+<nav *ngIf="(allNavData$ | async) as navData">
   <ul>
     <li>
       <a [routerLink]="['/']">Home</a>
     </li>
-    <li *ngFor="let lesson of lessons">
-      <a [routerLink]="[lesson.path]">{{lesson.name}}</a>
+    <li *ngFor="let navLink of navData">
+      <a [routerLink]="[navLink.path]">{{navLink.name}}</a>
+      <span>{{navLink.correct}}</span>
     </li>
   </ul>
 </nav>

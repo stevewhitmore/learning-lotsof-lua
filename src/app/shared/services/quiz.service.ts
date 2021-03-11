@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable, of } from 'rxjs';
+import { combineLatest, Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { LessonService } from './lesson.service';
 
@@ -8,9 +8,10 @@ import { LessonService } from './lesson.service';
   providedIn: 'root',
 })
 export class QuizService {
-
-  quizContent$: Observable<any> = this.http.get('assets/quizzes/quiz-content.json');
-
+  private answeredQuestionsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('luaQuizAnswers') || '[]'));
+  answeredQuestions$: Observable<any> = this.answeredQuestionsSubject.asObservable();
+  quizContent$: Observable<any> = this.http.get('assets/quiz-content.json');
+  
   constructor(private http: HttpClient,
               private lessonService: LessonService) {}
 
@@ -22,5 +23,9 @@ export class QuizService {
         return of(quizContent.find((quiz:any) => quiz.id === quizId));
       }),
     );
+  }
+
+  updateNavIndicator(answers: any) {
+    this.answeredQuestionsSubject.next(answers);
   }
 }

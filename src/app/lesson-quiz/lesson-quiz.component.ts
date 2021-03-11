@@ -1,10 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { QuizService } from '../shared/services/quiz.service';
 
 interface QuizAnswerModel {
   id: string;
   givenAnswer: string;
   correct: boolean;
+  lessonPath: string;
 }
 
 @Component({
@@ -14,6 +16,7 @@ interface QuizAnswerModel {
 })
 export class LessonQuizComponent implements OnChanges {
   @Input() quizContent: any;
+  @Input() lessonPath: string = '';
   @Output() cancelQuizClick: EventEmitter<any> = new EventEmitter();
   latestQuizContent: any;
   answerField = new FormControl();
@@ -23,19 +26,18 @@ export class LessonQuizComponent implements OnChanges {
   storageArray: QuizAnswerModel[] = [];
   previouslyAnswered: QuizAnswerModel | undefined;
 
-  constructor() {}
+  constructor(private quizService: QuizService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    this.latestQuizContent = changes.quizContent.currentValue;
+    const changedQuizContent = changes.quizContent;
+    if (changedQuizContent) {
+      this.latestQuizContent = changedQuizContent.currentValue;
+    }
 
     if (this.latestQuizContent) {
-      this.initLocalStorageUse();
+      this.getLocalStorageArray();
       this.checkForPreviousAnswer();
     }
-  }
-
-  initLocalStorageUse() {
-    this.storageArray = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
   }
 
   checkForPreviousAnswer() {
@@ -56,16 +58,21 @@ export class LessonQuizComponent implements OnChanges {
   }
 
   submitAnswer() {
+    this.answered = true;
     this.answeredCorrectly = this.answerField.value === this.latestQuizContent.answer;
-    this.updateLocalStorage();
-  }
 
-  updateLocalStorage() {
-    const updatedStorageObject: QuizAnswerModel = {
+    const updatedAnswer: QuizAnswerModel = {
       id: this.latestQuizContent.id,
       givenAnswer: this.answerField.value,
       correct: this.answeredCorrectly,
+      lessonPath: this.lessonPath,
     };
+
+    this.updateLocalStorage(updatedAnswer);
+    this.quizService.updateNavIndicator(this.storageArray);
+  }
+
+  updateLocalStorage(updatedStorageObject: QuizAnswerModel) {
 
     if (!this.storageArray.some((quizResult: QuizAnswerModel) => quizResult.id === updatedStorageObject.id)) {
       this.storageArray.unshift(updatedStorageObject);
@@ -82,5 +89,10 @@ export class LessonQuizComponent implements OnChanges {
     });
 
     localStorage.setItem(this.storageKey, JSON.stringify(updatedStorageArray));
+    this.getLocalStorageArray();
+  }
+
+  getLocalStorageArray() {
+    this.storageArray = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
   }
 }
