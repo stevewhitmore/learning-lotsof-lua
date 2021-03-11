@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 interface QuizAnswerModel {
   id: string;
-  answered: string;
+  givenAnswer: string;
   correct: boolean;
 }
 
@@ -18,16 +18,41 @@ export class LessonQuizComponent implements OnChanges {
   latestQuizContent: any;
   answerField = new FormControl();
   answeredCorrectly: boolean = false;
+  answered: boolean = false;
+  storageKey: string = 'luaQuizAnswers';
+  storageArray: QuizAnswerModel[] = [];
+  previouslyAnswered: QuizAnswerModel | undefined;
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.latestQuizContent = changes.quizContent.currentValue;
-    console.log(this.latestQuizContent);
+
+    if (this.latestQuizContent) {
+      this.initLocalStorageUse();
+      this.checkForPreviousAnswer();
+    }
+  }
+
+  initLocalStorageUse() {
+    this.storageArray = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
+
+  checkForPreviousAnswer() {
+    this.previouslyAnswered = this.storageArray.find((a: any) => a.id === this.latestQuizContent.id);
+    this.answered = !!this.previouslyAnswered;
+    if (this.answered && this.previouslyAnswered) {
+      this.answerField.setValue(this.previouslyAnswered.givenAnswer);
+      this.answeredCorrectly = this.answerField.value === this.latestQuizContent.answer;
+    }
   }
 
   cancelQuiz() {
     this.cancelQuizClick.emit();
+  }
+
+  clearAnswer() {
+
   }
 
   submitAnswer() {
@@ -36,28 +61,26 @@ export class LessonQuizComponent implements OnChanges {
   }
 
   updateLocalStorage() {
-    const storageKey = 'luaQuizAnswers';
-    const storageArray = JSON.parse(localStorage.getItem(storageKey) || '[]');
     const updatedStorageObject: QuizAnswerModel = {
       id: this.latestQuizContent.id,
-      answered: this.answerField.value,
+      givenAnswer: this.answerField.value,
       correct: this.answeredCorrectly,
     };
 
-    if (!storageArray.some((quizResult: QuizAnswerModel) => quizResult.id === updatedStorageObject.id)) {
-      storageArray.unshift(updatedStorageObject);
+    if (!this.storageArray.some((quizResult: QuizAnswerModel) => quizResult.id === updatedStorageObject.id)) {
+      this.storageArray.unshift(updatedStorageObject);
     }
 
-    const updatedStorageArray = storageArray.map((quizResult: QuizAnswerModel) => {
+    const updatedStorageArray = this.storageArray.map((quizResult: QuizAnswerModel) => {
       return quizResult.id === updatedStorageObject.id
-        ? {
-            ...quizResult,
-            answered: updatedStorageObject.answered,
-            correct: updatedStorageObject.correct,
-          }
-        : quizResult;
+                                ? {
+                                    ...quizResult,
+                                    givenAnswer: updatedStorageObject.givenAnswer,
+                                    correct: updatedStorageObject.correct,
+                                  }
+                                : quizResult;
     });
 
-    localStorage.setItem(storageKey, JSON.stringify(updatedStorageArray));
+    localStorage.setItem(this.storageKey, JSON.stringify(updatedStorageArray));
   }
 }

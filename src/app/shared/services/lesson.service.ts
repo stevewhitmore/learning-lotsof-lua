@@ -22,7 +22,6 @@ export class LessonService {
   pathChange$: Observable<any> = this.pathChangeSubject.asObservable();
 
   lessonData$: Observable<LessonModel[]> = <Observable<LessonModel[]>>this.http.get('assets/lessons-meta.json');
-  quizContent$: Observable<any> = this.http.get('assets/quizzes/quiz-content.json');
 
   navigationTree$: Observable<any[]> = this.lessonData$.pipe(
     map((lessonData) => {
@@ -39,16 +38,6 @@ export class LessonService {
 
   getLessonContent(path: string) {
     return this.http.get(`assets/lessons/${path}.md`, {responseType: 'text'});
-  }
-
-  getQuizContent(path: string) {
-    return combineLatest([this.lessonData$, this.quizContent$]).pipe(
-      switchMap(([lessonData, quizContent]) => {
-        const lessonMeta = lessonData.find(lesson => lesson.path === path);
-        const quizId = lessonMeta ? lessonMeta.quizId : 0;
-        return of(quizContent.find((quiz:any) => quiz.id === quizId));
-      }),
-    );
   }
 
 }

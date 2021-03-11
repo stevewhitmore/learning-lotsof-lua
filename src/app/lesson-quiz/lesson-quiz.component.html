@@ -8,6 +8,18 @@
     
   </div>
 
+
+  <div *ngIf="answered" class="result-indicator">
+    <div class="correct" *ngIf="answeredCorrectly; else incorrect">
+      <p>YES! YOU DID IT!! <strong>{{latestQuizContent.answer}}</strong> is correct :)</p>
+    </div>
+    <ng-template #incorrect>
+      <div class="incorrect">
+        <p>Nope not quite. Try again!</p>
+      </div>
+    </ng-template>
+  </div>
+
   <div class="button-group">
     <button type="button"
             class="secondary"

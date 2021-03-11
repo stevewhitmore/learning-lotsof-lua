@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
 import { switchMap, tap, mergeMap } from 'rxjs/operators';
 import { LessonService } from '../shared/services/lesson.service';
+import { QuizService } from '../shared/services/quiz.service';
 
 @Component({
   selector: 'app-lesson',
@@ -17,7 +18,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   pathSub: Subscription | undefined;
 
   constructor(private route: ActivatedRoute,
-              private lessonService: LessonService) {}
+              private lessonService: LessonService,
+              private quizService: QuizService) {}
 
   ngOnInit() {
     this.getLessonContent();
@@ -42,7 +44,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   getQuizContent() {
-    this.quizContent$ = this.lessonService.getQuizContent(this.path);
+    this.quizContent$ = this.quizService.getQuizContent(this.path);
     this.quizMode = true;
   }
 
