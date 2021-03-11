@@ -3,8 +3,31 @@ ul {
   padding: 0;
   list-style: none;
   
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+      width: 20px;
+
+      &.unanswered path {
+        fill: #fff;
+      }
+
+      &.incorrect path {
+        fill: red;
+      }
+
+      &.correct path {
+        fill: rgb(37, 156, 64);
+      }
+    }
+  }
+
   a {
     display: block;
     padding: 10px;
+    margin-right: 10px;
   }
 }

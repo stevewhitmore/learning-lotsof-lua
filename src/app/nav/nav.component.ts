@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, switchMap, mergeMap } from 'rxjs/operators';
 import { LessonService } from '../shared/services/lesson.service';
 import { QuizService } from '../shared/services/quiz.service';
 
@@ -12,27 +12,23 @@ import { QuizService } from '../shared/services/quiz.service';
 export class NavComponent {
 
   navData$ = this.lessonService.navigationTree$;
-
-  quizData$ = this.quizService.answeredQuestions$.pipe(tap(console.log));
+  quizData$ = this.quizService.answeredQuestions$;
 
   allNavData$ = combineLatest([this.navData$, this.quizData$])
     .pipe(
-      map(([navData, quizData]) => {
-        console.log('navData:', navData)
-        console.log('quizData:', quizData)
-        const updated = navData.map(n => {
+      mergeMap(([navData, quizData]) => {
+        const navWithQuizResults = navData.map((n:any) => {
           const quizResult = quizData.find((q: any) => q.lessonPath === n.path);
           const correct = quizResult && quizResult.correct;
           return {
             ...n,
             correct: correct,
           }
-        })
-        return updated;
+        });
+        return of(navWithQuizResults)
       }),
-    ).subscribe(console.log);
-  
-  
+      tap(d => console.log('d:', d))
+    );
 
   constructor(private lessonService: LessonService,
               private quizService: QuizService) {}
