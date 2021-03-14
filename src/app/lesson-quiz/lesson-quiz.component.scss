@@ -1,3 +1,16 @@
+.result-indicator {
+    text-align: center;
+    display: grid;
+    margin-bottom: 2rem;
+
+    .correct {
+        background-color: green;
+    }
+    .incorrect {
+        background-color: red;
+    }
+}
+
 .button-group {
     display: flex;
     justify-content: space-between;

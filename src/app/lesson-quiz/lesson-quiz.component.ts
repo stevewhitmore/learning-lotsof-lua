@@ -1,11 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
-interface QuizAnswerModel {
-  id: string;
-  answered: string;
-  correct: boolean;
-}
+import { QuizAnswerModel } from '../shared/models';
 
 @Component({
   selector: 'app-lesson-quiz',
@@ -14,50 +9,42 @@ interface QuizAnswerModel {
 })
 export class LessonQuizComponent implements OnChanges {
   @Input() quizContent: any;
+  @Input() lessonPath: string = '';
+  @Output() answerSubmittion: EventEmitter<any> = new EventEmitter();
   @Output() cancelQuizClick: EventEmitter<any> = new EventEmitter();
   latestQuizContent: any;
   answerField = new FormControl();
   answeredCorrectly: boolean = false;
-
-  constructor() {}
+  answered: boolean = false;
 
   ngOnChanges(changes: SimpleChanges) {
-    this.latestQuizContent = changes.quizContent.currentValue;
-    console.log(this.latestQuizContent);
+    const changedQuizContent = changes.quizContent;
+    if (changedQuizContent) {
+      this.latestQuizContent = changedQuizContent.currentValue;      
+
+      if (this.latestQuizContent && this.latestQuizContent.previouslyAnswered) {
+        this.answered = true;
+        this.answerField.setValue(this.latestQuizContent.givenAnswer);
+        this.answeredCorrectly = this.latestQuizContent.givenAnswer === this.latestQuizContent.answer;
+      }
+    }
+  }
+
+  submitAnswer() {
+    this.answered = true;
+    this.answeredCorrectly = this.answerField.value === this.latestQuizContent.answer;
+
+    const updatedAnswer: QuizAnswerModel = {
+      id: this.latestQuizContent.id,
+      givenAnswer: this.answerField.value,
+      correct: this.answeredCorrectly,
+      lessonPath: this.lessonPath,
+    };
+
+    this.answerSubmittion.emit(updatedAnswer);
   }
 
   cancelQuiz() {
     this.cancelQuizClick.emit();
-  }
-
-  submitAnswer() {
-    this.answeredCorrectly = this.answerField.value === this.latestQuizContent.answer;
-    this.updateLocalStorage();
-  }
-
-  updateLocalStorage() {
-    const storageKey = 'luaQuizAnswers';
-    const storageArray = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    const updatedStorageObject: QuizAnswerModel = {
-      id: this.latestQuizContent.id,
-      answered: this.answerField.value,
-      correct: this.answeredCorrectly,
-    };
-
-    if (!storageArray.some((quizResult: QuizAnswerModel) => quizResult.id === updatedStorageObject.id)) {
-      storageArray.unshift(updatedStorageObject);
-    }
-
-    const updatedStorageArray = storageArray.map((quizResult: QuizAnswerModel) => {
-      return quizResult.id === updatedStorageObject.id
-        ? {
-            ...quizResult,
-            answered: updatedStorageObject.answered,
-            correct: updatedStorageObject.correct,
-          }
-        : quizResult;
-    });
-
-    localStorage.setItem(storageKey, JSON.stringify(updatedStorageArray));
   }
 }
