@@ -32,4 +32,9 @@ export class NavComponent {
   constructor(private lessonService: LessonService,
               private quizService: QuizService) {}
 
+  
+  resetQuizProgress() {
+    this.quizService.clearLocalStorage();
+  }
+
 }
