@@ -65,6 +65,11 @@ export class QuizService {
     this.getLocalStorageArray();
   }
 
+  clearLocalStorage() {
+    localStorage.removeItem(this.storageKey);
+    this.answeredQuestionsSubject.next([]);
+  }
+
   getLocalStorageArray() {
     this.storageArray = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
   }
