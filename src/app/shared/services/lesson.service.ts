@@ -1,17 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map, switchMap, tap } from 'rxjs/operators'
-import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-
-export interface TopicModel {
-  name: string;
-  path: string;
-}
-
-export interface LessonModel extends TopicModel {
-  quizId: number;
-}
+import { map } from 'rxjs/operators'
+import { Observable, Subject } from 'rxjs';
+import { LessonModel } from '../models';
 
 @Injectable({
   providedIn: 'root',
