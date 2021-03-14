@@ -27,7 +27,6 @@ export class NavComponent {
         });
         return of(navWithQuizResults)
       }),
-      tap(d => console.log('d:', d))
     );
 
   constructor(private lessonService: LessonService,

@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
+import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { switchMap, tap, mergeMap } from 'rxjs/operators';
+import { QuizAnswerModel } from '../shared/models';
 import { LessonService } from '../shared/services/lesson.service';
 import { QuizService } from '../shared/services/quiz.service';
 
@@ -50,6 +51,10 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   onTakeQuizClick() {
     this.getQuizContent();
+  }
+
+  onAnswerSubmission(answer: QuizAnswerModel) {
+    this.quizService.passAlongAnswer(answer);
   }
 
   onCancelQuizClick() {
