@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, of, Subscription } from 'rxjs';
-import { switchMap, tap, mergeMap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { QuizAnswerModel } from '../shared/models';
 import { LessonService } from '../shared/services/lesson.service';
 import { QuizService } from '../shared/services/quiz.service';
@@ -28,7 +28,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.pathSub = this.route.paramMap
       .subscribe(params => {
         this.path = params.get('path');
-      })
+      });
   }
 
   getLessonContent() {
@@ -38,7 +38,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         if (path) {
           return this.lessonService.getLessonContent(path);
         }
-        return of()
+        return of('No content found');
       }),
       tap(() => this.onCancelQuizClick()),
     );

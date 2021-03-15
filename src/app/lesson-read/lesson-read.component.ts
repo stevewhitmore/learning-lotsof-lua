@@ -1,18 +1,13 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-lesson-read',
   templateUrl: './lesson-read.component.html',
   styleUrls: ['./lesson-read.component.scss']
 })
-export class LessonReadComponent implements OnChanges {
-  @Input() lessonContent: string = '';
+export class LessonReadComponent {
+  @Input() lessonContent = '';
   @Output() takeQuizClick: EventEmitter<any> = new EventEmitter();
-
-  constructor() { }
-
-  ngOnChanges(changes: SimpleChanges) {
-  }
 
   takeQuiz() {
     this.takeQuizClick.emit();
