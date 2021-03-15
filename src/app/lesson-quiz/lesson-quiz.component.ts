@@ -9,18 +9,18 @@ import { QuizAnswerModel } from '../shared/models';
 })
 export class LessonQuizComponent implements OnChanges {
   @Input() quizContent: any;
-  @Input() lessonPath: string = '';
+  @Input() lessonPath = '';
   @Output() answerSubmittion: EventEmitter<any> = new EventEmitter();
   @Output() cancelQuizClick: EventEmitter<any> = new EventEmitter();
   latestQuizContent: any;
   answerField = new FormControl();
-  answeredCorrectly: boolean = false;
-  answered: boolean = false;
+  answeredCorrectly = false;
+  answered = false;
 
   ngOnChanges(changes: SimpleChanges) {
     const changedQuizContent = changes.quizContent;
     if (changedQuizContent) {
-      this.latestQuizContent = changedQuizContent.currentValue;      
+      this.latestQuizContent = changedQuizContent.currentValue;
 
       if (this.latestQuizContent && this.latestQuizContent.previouslyAnswered) {
         this.answered = true;

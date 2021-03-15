@@ -17,22 +17,21 @@ export class NavComponent {
   allNavData$ = combineLatest([this.navData$, this.quizData$])
     .pipe(
       mergeMap(([navData, quizData]) => {
-        const navWithQuizResults = navData.map((n:any) => {
+        const navWithQuizResults = navData.map((n: any) => {
           const quizResult = quizData.find((q: any) => q.lessonPath === n.path);
           const correct = quizResult && quizResult.correct;
           return {
             ...n,
-            correct: correct,
-          }
+            correct,
+          };
         });
-        return of(navWithQuizResults)
+        return of(navWithQuizResults);
       }),
     );
 
   constructor(private lessonService: LessonService,
               private quizService: QuizService) {}
 
-  
   resetQuizProgress() {
     this.quizService.clearLocalStorage();
   }

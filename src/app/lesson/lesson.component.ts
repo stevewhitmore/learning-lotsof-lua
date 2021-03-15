@@ -28,7 +28,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.pathSub = this.route.paramMap
       .subscribe(params => {
         this.path = params.get('path');
-      })
+      });
   }
 
   getLessonContent() {
@@ -38,7 +38,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         if (path) {
           return this.lessonService.getLessonContent(path);
         }
-        return of()
+        return of('No content found');
       }),
       tap(() => this.onCancelQuizClick()),
     );

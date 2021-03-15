@@ -12,9 +12,9 @@ export class QuizService {
   private answeredQuestionsSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('luaQuizAnswers') || '[]'));
   answeredQuestions$: Observable<any> = this.answeredQuestionsSubject.asObservable();
   quizContent$: Observable<any> = this.http.get('assets/quiz-content.json');
-  storageKey: string = 'luaQuizAnswers';
+  storageKey = 'luaQuizAnswers';
   storageArray: QuizAnswerModel[] = [];
-  
+
   constructor(private http: HttpClient,
               private lessonService: LessonService) {}
 
@@ -25,13 +25,13 @@ export class QuizService {
         const lessonMeta = lessonData.find(lesson => lesson.path === path);
         const quizId = lessonMeta ? lessonMeta.quizId : 0;
         const previouslyAnswered = this.storageArray.find((a: any) => a.id === quizId);
-        const quizData = quizContent.find((quiz:any) => quiz.id === quizId)
+        const quizData = quizContent.find((quiz: any) => quiz.id === quizId);
         const currentQuiz = {
           ...quizData,
           previouslyAnswered: !!previouslyAnswered,
           givenAnswer: previouslyAnswered?.givenAnswer,
           answeredCorrectly: quizData.answer === previouslyAnswered?.givenAnswer,
-        }
+        };
         return of(currentQuiz);
       }),
     );
@@ -51,15 +51,13 @@ export class QuizService {
       this.storageArray.unshift(updatedStorageObject);
     }
 
-    const updatedStorageArray = this.storageArray.map((quizResult: QuizAnswerModel) => {
-      return quizResult.id === updatedStorageObject.id
+    const updatedStorageArray = this.storageArray.map((quizResult: QuizAnswerModel) => quizResult.id === updatedStorageObject.id
                                 ? {
                                     ...quizResult,
                                     givenAnswer: updatedStorageObject.givenAnswer,
                                     correct: updatedStorageObject.correct,
                                   }
-                                : quizResult;
-    });
+                                : quizResult);
 
     localStorage.setItem(this.storageKey, JSON.stringify(updatedStorageArray));
     this.getLocalStorageArray();
