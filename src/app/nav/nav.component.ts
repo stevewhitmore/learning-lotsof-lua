@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest, Observable, of } from 'rxjs';
-import { tap, map, switchMap, mergeMap } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { combineLatest, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { LessonService } from '../shared/services/lesson.service';
 import { QuizService } from '../shared/services/quiz.service';
 
