@@ -24,24 +24,26 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getLessonContent();
-
-    this.pathSub = this.route.paramMap
-      .subscribe(params => {
-        this.path = params.get('path');
-      });
   }
 
   getLessonContent() {
     this.lessonContent$ = this.route.paramMap.pipe(
       switchMap(params => {
-        const path = params.get('path');
-        if (path) {
-          return this.lessonService.getLessonContent(path);
+        this.path = params.get('path');
+        if (this.path) {
+          return this.lessonService.getLessonContent(this.path);
         }
         return of('No content found');
       }),
       tap(() => this.onCancelQuizClick()),
     );
+  }
+
+  listenForPathChange() {
+    this.pathSub = this.route.paramMap // <-- can this be cleaned up?
+      .subscribe(params => {
+        this.path = params.get('path');
+      });
   }
 
   getQuizContent() {
