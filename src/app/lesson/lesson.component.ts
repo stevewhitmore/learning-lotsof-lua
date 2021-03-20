@@ -39,13 +39,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     );
   }
 
-  listenForPathChange() {
-    this.pathSub = this.route.paramMap // <-- can this be cleaned up?
-      .subscribe(params => {
-        this.path = params.get('path');
-      });
-  }
-
   getQuizContent() {
     this.quizContent$ = this.quizService.getQuizContent(this.path);
     this.quizMode = true;
