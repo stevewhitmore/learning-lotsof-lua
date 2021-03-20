@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, flush } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { QuizAnswerModel } from '../shared/models';
 import { LessonService, QuizService } from '../shared/services';
 import { ActivatedRouteStub } from '../testing/activated-route.stub';
 import { LessonServiceStub } from '../testing/lesson-service.stub';
@@ -13,7 +13,7 @@ const activatedRouteSub = new ActivatedRouteStub();
 const lessonServiceStub = new LessonServiceStub();
 const quizServiceStub = new QuizServiceStub();
 
-fdescribe('LessonComponent', () => {
+describe('LessonComponent', () => {
   let component: LessonComponent;
   let fixture: ComponentFixture<LessonComponent>;
 
@@ -109,10 +109,29 @@ fdescribe('LessonComponent', () => {
   }); // onTakeQuizClick()
 
   describe('onAnswerSubmission()', () => {
+    it('should call quizService.passAlongAnswer()', fakeAsync(() => {
+      const spy = spyOn(quizServiceStub, 'passAlongAnswer').and.callThrough();
+      const answer: QuizAnswerModel = {
+        id: '1',
+        givenAnswer: 'foo',
+        correct: true,
+        lessonPath: 'bar',
+      };
 
+      component.onAnswerSubmission(answer);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(answer);
+    }));
   }); // onAnswerSubmission()
 
   describe('onCancelQuizClick()', () => {
+    it('should set "quizMode" to false', () => {
+      component.quizMode = true;
 
+      component.onCancelQuizClick();
+
+      expect(component.quizMode).toBe(false);
+    });
   }); // onCancelQuizClick()
 });
