@@ -2,24 +2,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LessonQuizComponent } from './lesson-quiz.component';
 
-describe('LessonQuizComponent', () => {
+fdescribe('LessonQuizComponent', () => {
   let component: LessonQuizComponent;
   let fixture: ComponentFixture<LessonQuizComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ LessonQuizComponent ]
-    })
-    .compileComponents();
-  });
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ LessonQuizComponent ]
+    });
+
     fixture = TestBed.createComponent(LessonQuizComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  describe('setQuizState()', () => {
     expect(component).toBeTruthy();
-  });
+  }); // setQuizState()
 });
