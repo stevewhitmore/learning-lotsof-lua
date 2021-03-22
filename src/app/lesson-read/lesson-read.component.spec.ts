@@ -6,20 +6,24 @@ describe('LessonReadComponent', () => {
   let component: LessonReadComponent;
   let fixture: ComponentFixture<LessonReadComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ LessonReadComponent ]
-    })
-    .compileComponents();
-  });
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ LessonReadComponent ]
+    });
+
     fixture = TestBed.createComponent(LessonReadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('takeQuiz()', () => {
+    it('should emit nothing', () => {
+      const spy = spyOn(component.takeQuizClick, 'emit').and.callThrough();
+
+      component.takeQuiz();
+      
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith();
+    });
   });
 });

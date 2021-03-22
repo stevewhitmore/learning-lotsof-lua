@@ -9,5 +9,7 @@ export class QuizServiceStub {
         return of('some quiz content');
     }
 
-    passAlongAnswer(answer: QuizAnswerModel) { }
+    passAlongAnswer(answer: QuizAnswerModel) {}
+
+    clearLocalStorage() {}
 }
