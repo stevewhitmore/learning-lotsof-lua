@@ -21,12 +21,15 @@ export class LessonQuizComponent implements OnChanges {
     const changedQuizContent = changes.quizContent;
     if (changedQuizContent) {
       this.latestQuizContent = changedQuizContent.currentValue;
+      this.setQuizState();
+    }
+  }
 
-      if (this.latestQuizContent && this.latestQuizContent.previouslyAnswered) {
-        this.answered = true;
-        this.answerField.setValue(this.latestQuizContent.givenAnswer);
-        this.answeredCorrectly = this.latestQuizContent.givenAnswer === this.latestQuizContent.answer;
-      }
+  setQuizState() {
+    if (this.latestQuizContent && this.latestQuizContent.previouslyAnswered) {
+      this.answered = true;
+      this.answerField.setValue(this.latestQuizContent.givenAnswer);
+      this.answeredCorrectly = this.latestQuizContent.givenAnswer === this.latestQuizContent.answer;
     }
   }
 
