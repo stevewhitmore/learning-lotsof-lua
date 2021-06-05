@@ -14,6 +14,7 @@ import { QuizService } from '../shared/services/quiz.service';
 export class LessonComponent implements OnInit, OnDestroy {
   lessonContent$: Observable<any> = new Observable();
   quizContent$: Observable<any> = new Observable();
+  submittedAnswers$:  Observable<any> = new Observable();
   quizMode = false;
   path: any;
   pathSub: Subscription | undefined;
@@ -29,6 +30,9 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.path = params.get('path');
       });
+
+    
+    this.submittedAnswers$ = this.quizService.answeredQuestions$;
   }
 
   getLessonContent() {
