@@ -6,6 +6,7 @@
   <ng-template #showQuiz>
     <app-lesson-quiz [quizContent]="quizContent$ | async"
                       [lessonPath]="path"
+                      [submittedAnswers]="submittedAnswers$ | async"
                       (answerSubmittion)="onAnswerSubmission($event)"
                       (cancelQuizClick)="onCancelQuizClick()"></app-lesson-quiz>
   </ng-template>

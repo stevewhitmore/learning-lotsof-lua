@@ -2,8 +2,10 @@ nav {
   background: #4c4c4c;
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 100vh;
   justify-content: space-between;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
 }
 ul {
   margin: 0;
