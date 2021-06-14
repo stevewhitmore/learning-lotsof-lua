@@ -31,7 +31,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.path = params.get('path');
       });
 
-    
+
     this.submittedAnswers$ = this.quizService.answeredQuestions$;
   }
 

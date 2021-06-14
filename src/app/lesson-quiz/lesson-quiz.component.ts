@@ -28,7 +28,7 @@ export class LessonQuizComponent implements OnChanges {
 
     if (changedQuizContent) {
       this.latestQuizContent = changedQuizContent.currentValue;
-    
+
       if (this.latestQuizContent && this.latestQuizContent.previouslyAnswered) {
         this.answered = true;
         this.answerField.setValue(this.latestQuizContent.givenAnswer);
@@ -44,7 +44,7 @@ export class LessonQuizComponent implements OnChanges {
       this.submittedAnswers = changedAnswers.currentValue;
       if (!this.submittedAnswers.length) {
         this.answered = false;
-        this.answerField.setValue('');  
+        this.answerField.setValue('');
       }
     }
   }
